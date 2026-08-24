@@ -1,0 +1,61 @@
+name: CI Quality Gates Pipeline
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  quality-gate:
+    name: Build, Lint & Automated Test Levels
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: 3. Install Dependencies
+        run: npm ci || npm install
+
+      - name: 4. Quality Gate 1 - Static Analysis (ESLint)
+        run: npm run lint
+
+      - name: 5. Quality Gate 2 - Unit Tests
+        run: npm run test:unit
+
+      - name: 6. Quality Gate 3 - Integration & Handshake Tests
+        run: npm run test:integration
+
+      - name: 7. Quality Gate 4 - System / API Tests
+        run: npm run test:system
+
+      - name: 8. Quality Gate 5 - Contract Tests
+        run: npm run test:contract
+
+      - name: 9. Quality Gate 6 - Pairwise Combinatorial Test Generation
+        run: npm run test:pairwise
+
+      - name: 10. Quality Gate 7 - Code Coverage Threshold Enforcement (>=80%)
+        run: npm run test:coverage
+
+      - name: 11. Quality Gate 8 - Playwright End-to-End (E2E) UI Tests
+        run: |
+          npx playwright install --with-deps chromium
+          npm run test:e2e
+
+      - name: 12. Quality Gate 9 - Sandbox Multi-Layer Smoke Test
+        run: |
+          npm run sandbox -- --layer=1
+          npm run sandbox -- --layer=2
+          npm run sandbox -- --layer=3

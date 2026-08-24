@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products Catalog — The QA Checkout Sandbox</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span>QA Checkout Sandbox</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html" class="active">Products</a></li>
+        <li>
+          <a href="cart.html">
+            Cart <span class="cart-badge" id="cart-count">0</span>
+          </a>
+        </li>
+        <li><a href="checkout.html">Checkout</a></li>
+        <li><a href="sandbox.html">Testing Sandbox</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Available Products</h1>
+        <p class="page-subtitle">Select items to add to your cart. Live stock levels are queried directly from the Inventory Service.</p>
+      </div>
+      <div>
+        <a href="cart.html" class="btn btn-primary btn-sm">View Cart</a>
+      </div>
+    </div>
+
+    <!-- Alert Notification Banner -->
+    <div id="alert-container"></div>
+
+    <!-- Dynamic Product Cards Grid -->
+    <div class="product-grid" id="products-grid">
+      <!-- Injected via js/products.js -->
+    </div>
+  </main>
+
+  <footer>
+    The QA Checkout Sandbox — Final-Year Software Testing Reference Project
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/products.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The QA Checkout Sandbox — Software Testing Reference</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span>QA Checkout Sandbox</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li>
+          <a href="cart.html">
+            Cart <span class="cart-badge" id="cart-count">0</span>
+          </a>
+        </li>
+        <li><a href="checkout.html">Checkout</a></li>
+        <li><a href="sandbox.html">Testing Sandbox</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="main-container">
+    <section class="hero-card">
+      <h1>The QA Checkout Sandbox</h1>
+      <p>
+        A full-stack software testing environment demonstrating all concepts learned across
+        <strong>Weeks 1–8</strong> of an advanced software testing curriculum. Powered by Node.js,
+        Express, Vanilla JavaScript, Gerard Meszaros Test Doubles, Pairwise PICT, and Playwright.
+      </p>
+      <div class="hero-actions">
+        <a href="products.html" class="btn btn-primary">Browse Product Catalog</a>
+        <a href="sandbox.html" class="btn btn-secondary">Open Testing Sandbox</a>
+      </div>
+    </section>
+
+    <!-- Testing Modules Overview Grid -->
+    <div class="page-header">
+      <div>
+        <h2 class="page-title">Curriculum Testing Highlights</h2>
+        <p class="page-subtitle">Interactive demonstrations across all 8 software testing modules</p>
+      </div>
+    </div>
+
+    <div class="product-grid">
+      <div class="product-card">
+        <div>
+          <span class="badge badge-info">Weeks 1 & 2</span>
+          <h3 class="product-name" style="margin: 8px 0;">Foundations & Test Levels</h3>
+          <p class="product-desc">
+            V-Model architecture separating Unit (Pricing & Boundary logic), Integration (Subsystem handshakes),
+            and System (Supertest HTTP API) verification.
+          </p>
+        </div>
+        <a href="products.html" class="btn btn-secondary btn-sm btn-block">Explore Store</a>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <span class="badge badge-info">Week 4</span>
+          <h3 class="product-name" style="margin: 8px 0;">Pairwise Combinatorial Testing</h3>
+          <p class="product-desc">
+            PICT-powered 2-way combinatorial test reduction (36 to 9 cases, 75% reduction) with domain constraints
+            (Safari valid only on macOS).
+          </p>
+        </div>
+        <a href="sandbox.html" class="btn btn-secondary btn-sm btn-block">Inspect Pairs</a>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <span class="badge badge-info">Week 5</span>
+          <h3 class="product-name" style="margin: 8px 0;">Test Doubles Taxonomy</h3>
+          <p class="product-desc">
+            Rigorous separation of Fake (Customer DB), Mock (Payment Gateway), Stub (Inventory Service),
+            and Spy (Email Notifier).
+          </p>
+        </div>
+        <a href="sandbox.html" class="btn btn-secondary btn-sm btn-block">View Doubles</a>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <span class="badge badge-info">Week 6 & Concurrency</span>
+          <h3 class="product-name" style="margin: 8px 0;">Handshakes & Race Safety</h3>
+          <p class="product-desc">
+            Atomic mutex check-and-decrement preventing overselling when concurrent buyers compete for the last item in stock.
+          </p>
+        </div>
+        <a href="sandbox.html" class="btn btn-secondary btn-sm btn-block">Run Concurrency Test</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    The QA Checkout Sandbox — Final-Year Software Testing Reference Project
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

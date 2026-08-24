@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart — The QA Checkout Sandbox</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">
+        <span>QA Checkout Sandbox</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li>
+          <a href="cart.html" class="active">
+            Cart <span class="cart-badge" id="cart-count">0</span>
+          </a>
+        </li>
+        <li><a href="checkout.html">Checkout</a></li>
+        <li><a href="sandbox.html">Testing Sandbox</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Your Shopping Cart</h1>
+        <p class="page-subtitle">Review items, adjust quantities, and proceed to the checkout handshake.</p>
+      </div>
+      <div>
+        <button class="btn btn-secondary btn-sm" id="btn-clear-cart">Clear Cart</button>
+      </div>
+    </div>
+
+    <!-- Empty Cart State -->
+    <div id="cart-empty-state" style="display: none; text-align: center; padding: 60px 20px;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 12px; color: #94a3b8;">Your cart is currently empty</h2>
+      <p style="color: #64748b; margin-bottom: 24px;">Add items from the product catalog to simulate the checkout pipeline.</p>
+      <a href="products.html" class="btn btn-primary">Browse Product Catalog</a>
+    </div>
+
+    <!-- Active Cart Content Grid -->
+    <div class="split-grid" id="cart-content">
+      <!-- Items Table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Item / Product</th>
+              <th>Unit Price</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cart-items-body">
+            <!-- Injected by js/cartUi.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Estimated Order Summary Box -->
+      <div class="summary-card">
+        <h3 style="font-size: 1.2rem; margin-bottom: 16px; color: #fff;">Order Summary</h3>
+        <div class="summary-row">
+          <span>Items Subtotal:</span>
+          <strong id="cart-subtotal">$0.00</strong>
+        </div>
+        <div class="summary-row">
+          <span>Estimated Sales Tax (8%):</span>
+          <span id="cart-est-tax">$0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Estimated Total:</span>
+          <span id="cart-est-total" style="color: #38bdf8;">$0.00</span>
+        </div>
+
+        <div style="margin-top: 24px; display: flex; flex-direction: column; gap: 10px;">
+          <a href="checkout.html" class="btn btn-primary btn-block" id="btn-proceed-checkout">
+            Proceed to Checkout
+          </a>
+          <a href="products.html" class="btn btn-secondary btn-block">
+            Continue Shopping
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    The QA Checkout Sandbox — Final-Year Software Testing Reference Project
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/cartUi.js"></script>
+</body>
+</html>

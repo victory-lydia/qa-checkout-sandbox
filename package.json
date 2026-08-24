@@ -1,0 +1,48 @@
+{
+  "name": "qa-checkout-sandbox",
+  "version": "1.0.0",
+  "description": "The QA Checkout Sandbox - Final-Year Software Testing Project",
+  "type": "module",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --runInBand",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules jest tests/unit --runInBand",
+    "test:integration": "NODE_OPTIONS=--experimental-vm-modules jest tests/integration --runInBand",
+    "test:system": "NODE_OPTIONS=--experimental-vm-modules jest tests/system --runInBand",
+    "test:contract": "NODE_OPTIONS=--experimental-vm-modules jest tests/contract --runInBand",
+    "test:pairwise": "node tests/pairwise/pairs.js && NODE_OPTIONS=--experimental-vm-modules jest tests/pairwise --runInBand",
+    "test:e2e": "playwright test",
+    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage --runInBand",
+    "sandbox": "node bin/sandbox.js",
+    "test:load": "node performance/load-test.js",
+    "test:stress": "node performance/stress-test.js",
+    "test:soak": "node performance/soak-test.js",
+    "export:metrics": "node performance/export-metrics.js"
+  },
+  "keywords": [
+    "software-testing",
+    "checkout",
+    "pairwise",
+    "test-doubles",
+    "handshake-testing",
+    "performance-testing"
+  ],
+  "author": "Software Testing Student",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "@playwright/test": "^1.62.1",
+    "autocannon": "^8.0.0",
+    "eslint": "^9.21.0",
+    "globals": "^16.0.0",
+    "jest": "^29.7.0",
+    "pict-node": "^1.1.0",
+    "supertest": "^7.0.0"
+  }
+}

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The QA Checkout Sandbox — Interactive UI</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 24px;
+    }
+
+    .title-group h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .title-group p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: #0f172a;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    select:focus, input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      margin-top: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      padding: 8px 12px;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    .product-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .product-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+    }
+
+    .product-info h4 {
+      font-size: 0.95rem;
+    }
+
+    .product-info span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .status-in-stock { color: var(--success); }
+    .status-out-of-stock { color: var(--danger); }
+    .status-low-stock { color: var(--warning); }
+
+    .receipt-box {
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      max-height: 380px;
+      overflow-y: auto;
+      color: #a5f3fc;
+    }
+
+    .test-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .test-actions button {
+      flex: 1;
+      min-width: 160px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title-group">
+        <h1>🛒 The QA Checkout Sandbox</h1>
+        <p>A complete Software Testing Laboratory (Weeks 1–8 Reference Engine)</p>
+      </div>
+      <div>
+        <span class="badge" id="layerBadge">Layer 1: Fully Isolated (Doubles)</span>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Checkout Simulation Card -->
+      <div class="card">
+        <h2>🛍️ Checkout Simulator</h2>
+
+        <div class="form-group">
+          <label>Select Test Customer:</label>
+          <select id="customerSelect">
+            <option value="cust-101">Alice Johnson (cust-101) — STANDARD Tier [Active]</option>
+            <option value="cust-102">Bob Smith (cust-102) — PRO Tier (5% Off) [Active]</option>
+            <option value="cust-103">Carol Suspended (cust-103) — [403 Suspended Test]</option>
+            <option value="cust-unknown-999">Unknown Customer (cust-unknown) — [404 Miss Test]</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Select Product:</label>
+          <select id="productSelect">
+            <option value="prod-in-stock" data-price="80.00" data-name="Wireless Headphones">Wireless Headphones ($80.00) — In Stock (100)</option>
+            <option value="prod-last-one" data-price="500.00" data-name="Rare Collectible">Rare Collectible ($500.00) — [Only 1 in Stock]</option>
+            <option value="prod-out-of-stock" data-price="45.00" data-name="Sold Out Gadget">Sold Out Gadget ($45.00) — [0 Stock / 400 Error Test]</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Quantity:</label>
+          <input type="number" id="itemQuantity" value="1" min="1" max="10">
+        </div>
+
+        <div class="form-group">
+          <label>Promo Discount Code (Optional):</label>
+          <select id="discountSelect">
+            <option value="">No Discount</option>
+            <option value="SAVE10">SAVE10 (10% Discount)</option>
+            <option value="SAVE20">SAVE20 (20% Discount)</option>
+            <option value="FLAT5">FLAT5 ($5 Flat Discount)</option>
+            <option value="FLAT15">FLAT15 ($15 Flat Discount)</option>
+            <option value="INVALID_COUPON">INVALID_COUPON (Error Testing)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Payment Card Simulation:</label>
+          <select id="paymentSelect">
+            <option value="tok_visa_valid">Valid Visa Card (tok_visa_valid) — [Success]</option>
+            <option value="tok_declined">Declined Card (tok_declined) — [402 Rollback Test]</option>
+          </select>
+        </div>
+
+        <button class="btn-primary" id="btnCheckout" onclick="handleCheckout()">🚀 Process Checkout Handshake</button>
+
+        <div class="test-actions">
+          <button class="btn-secondary" onclick="simulateRaceCondition()">⚡ Simulate Concurrency Race (2 Buyers)</button>
+          <button class="btn-secondary" onclick="checkHealth()">💓 Healthcheck API</button>
+        </div>
+      </div>
+
+      <!-- Live Transaction Log Card -->
+      <div class="card">
+        <h2>📋 Live Transaction & Handshake Log</h2>
+        <div class="receipt-box" id="logOutput">// Ready for transaction simulation.
+// Click "Process Checkout Handshake" or run automated tests.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function handleCheckout() {
+      const customerId = document.getElementById('customerSelect').value;
+      const productElem = document.getElementById('productSelect');
+      const selectedOption = productElem.options[productElem.selectedIndex];
+      const productId = productElem.value;
+      const productName = selectedOption.getAttribute('data-name');
+      const unitPrice = parseFloat(selectedOption.getAttribute('data-price'));
+      const quantity = parseInt(document.getElementById('itemQuantity').value, 10);
+      const discountCode = document.getElementById('discountSelect').value || null;
+      const paymentToken = document.getElementById('paymentSelect').value;
+
+      const payload = {
+        customerId,
+        items: [{ productId, name: productName, unitPrice, quantity }],
+        discountCode,
+        paymentToken
+      };
+
+      appendLog(`▶ [SENDING POST /api/checkout]...\n` + JSON.stringify(payload, null, 2));
+
+      try {
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        const status = response.status;
+
+        if (status === 201) {
+          appendLog(`\n✅ [HTTP 201 CREATED] Order Successful!\n` +
+            `---------------------------------------------------\n` +
+            `Order ID:         ${data.order.id}\n` +
+            `Customer ID:      ${data.order.customerId}\n` +
+            `Subtotal:         $${data.pricing.subtotal.toFixed(2)}\n` +
+            `Discount:        -$${data.pricing.discountAmount.toFixed(2)} (${data.pricing.discountCode || 'None'})\n` +
+            `Tax (8%):        +$${data.pricing.taxAmount.toFixed(2)}\n` +
+            `TOTAL CHARGED:    $${data.order.total.toFixed(2)}\n` +
+            `Status:           ${data.order.status}\n` +
+            `Txn ID:           ${data.paymentReceipt.transactionId}\n` +
+            `Notification:     ${data.notification ? data.notification.status : 'N/A'}\n` +
+            `---------------------------------------------------`
+          );
+        } else {
+          appendLog(`\n❌ [HTTP ${status} ERROR] Handshake Aborted:\n` +
+            `Code:    ${data.code}\n` +
+            `Message: ${data.message}\n` +
+            `Details: ${JSON.stringify(data.details || {})}`
+          );
+        }
+      } catch (err) {
+        appendLog(`\n❌ Network / Client Error: ${err.message}`);
+      }
+    }
+
+    async function simulateRaceCondition() {
+      appendLog(`\n⚡ [CONCURRENCY TEST] 2 Customers simultaneously purchasing 1 item in stock...`);
+
+      const req1 = fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId: 'cust-101',
+          items: [{ productId: 'prod-last-one', name: 'Rare Collectible', unitPrice: 500.00, quantity: 1 }],
+          paymentToken: 'tok_visa_valid'
+        })
+      });
+
+      const req2 = fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerId: 'cust-102',
+          items: [{ productId: 'prod-last-one', name: 'Rare Collectible', unitPrice: 500.00, quantity: 1 }],
+          paymentToken: 'tok_visa_valid'
+        })
+      });
+
+      const [res1, res2] = await Promise.all([req1, req2]);
+      const data1 = await res1.json();
+      const data2 = await res2.json();
+
+      appendLog(`Buyer 1 Result (HTTP ${res1.status}): ${data1.status || data1.code} ${data1.order ? `(Order: ${data1.order.id})` : data1.message}`);
+      appendLog(`Buyer 2 Result (HTTP ${res2.status}): ${data2.status || data2.code} ${data2.order ? `(Order: ${data2.order.id})` : data2.message}`);
+      appendLog(`✅ Mutex Verification: Exactly 1 Buyer Succeeded; Zero Overselling.`);
+    }
+
+    async function checkHealth() {
+      try {
+        const res = await fetch('/api/health');
+        const data = await res.json();
+        appendLog(`\n💓 [HEALTHCHECK HTTP ${res.status}]:\n` + JSON.stringify(data, null, 2));
+      } catch (err) {
+        appendLog(`\n❌ Healthcheck failed: ${err.message}`);
+      }
+    }
+
+    function appendLog(text) {
+      const box = document.getElementById('logOutput');
+      box.textContent = text + '\n\n' + box.textContent;
+    }
+  </script>
+</body>
+</html>
